@@ -17,3 +17,17 @@ export interface SuratType {
     "06": string;
   };
 }
+
+export interface AyatType {
+  nomorAyat: number;
+  teksArab: string;
+  teksLatin: string;
+  teksIndonesia: string;
+  audio: {
+    "01": string;
+    "02": string;
+    "03": string;
+    "04": string;
+    "05": string;
+  };
+}

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 export default function Surat() {
   const [surat, setSurat] = useState<SuratType[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const localSurat = localStorage.getItem("surat");
@@ -15,6 +16,7 @@ export default function Surat() {
 
     if (searchValue.length === 0) {
       setSurat(originalSurat);
+      setIsLoading(false);
       return;
     }
 
@@ -26,6 +28,7 @@ export default function Surat() {
         s.arti.toLowerCase().includes(query)
     );
     setSurat(filteredSurat);
+    setIsLoading(false);
   }, [searchValue]);
 
   useEffect(() => {
@@ -40,14 +43,19 @@ export default function Surat() {
     }
 
     async function localSuratCheck() {
+      setIsLoading(true);
       const localSurat = localStorage.getItem("surat");
 
       if (localSurat) {
-        setSurat(JSON.parse(localSurat));
+        setTimeout(() => {
+          setSurat(JSON.parse(localSurat));
+          setIsLoading(false);
+        }, 3000);
       } else {
         const resSurat = await getSurat();
         localStorage.setItem("surat", JSON.stringify(resSurat));
         setSurat(resSurat);
+        setIsLoading(false);
       }
     }
 
@@ -68,6 +76,7 @@ export default function Surat() {
           <Input
             placeholder="Cari surat, nomor, atau arti"
             onChange={(e) => {
+              setIsLoading(true);
               setSearchValue(e.target.value);
 
               if (e.target.value.length === 0) {
@@ -82,7 +91,7 @@ export default function Surat() {
           />
         </div>
         <div className="list_surat mt-4">
-          <SuratList surats={surat} />
+          <SuratList surats={surat} loading={isLoading} />
         </div>
       </div>
     </div>
