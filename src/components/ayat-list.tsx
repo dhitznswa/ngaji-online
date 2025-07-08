@@ -1,13 +1,13 @@
-import React from "react";
 import { Card, CardContent } from "./ui/card";
 import { CopyIcon, Share2Icon } from "lucide-react";
 import type { AyatType } from "@/global";
+import AudioPlayer from "./ui/audio-player";
 
 export default function AyatList({ ayats }: { ayats: AyatType[] }) {
   return (
     <>
-      {ayats.map((ayat, index) => (
-        <Card key={ayat.nomorAyat} className="mb-4">
+      {ayats.map((ayat, i) => (
+        <Card key={i} className="mb-4">
           <CardContent>
             <div className="w-full flex justify-between items-center">
               <div className="">
@@ -16,6 +16,7 @@ export default function AyatList({ ayats }: { ayats: AyatType[] }) {
                 </span>
               </div>
               <div className="flex justify-end gap-3 items-center">
+                <AudioPlayer audio={ayat.audio["05"]} className="w-[100px]" />
                 <CopyIcon className="w-5 h-5" />
                 <Share2Icon className="w-5 h-5" />
               </div>

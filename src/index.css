@@ -125,4 +125,23 @@
   .title-highlight {
     @apply bg-gradient-to-br from-green-600 to-cgreen bg-clip-text text-transparent text-shadow-foreground;
   }
+  /* global scrollbar styling */
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-cgreen) transparent; /* thumb, track (blue-500, gray-200) */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: transparent; /* Tailwind gray-200 */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: var(--color-cgreen); /* Tailwind blue-500 */
+    border-radius: 6px;
+  }
 }

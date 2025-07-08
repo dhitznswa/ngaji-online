@@ -5,41 +5,17 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import AudioPlayer from "@/components/ui/audio-player";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  ArrowBigLeft,
-  BookOpenTextIcon,
-  MapPinIcon,
-  PlayCircleIcon,
-} from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ArrowBigLeft, BookOpenTextIcon, MapPinIcon } from "lucide-react";
 import { Link, useLoaderData } from "react-router";
 
 export default function DetailSurat() {
   const data = useLoaderData();
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    audioRef.current = new Audio(data.audioFull["05"]);
-
-    return () => {
-      audioRef.current?.pause();
-      audioRef.current = null;
-    };
-  }, []);
-
-  function playAudio() {
-    audioRef.current?.play();
-  }
-
-  function pauseAudio() {
-    audioRef.current?.pause();
-  }
 
   return (
-    <div className="py-20">
+    <div className="py-20 relative">
       <div className="w-full">
         <Link
           to="/surat"
@@ -72,16 +48,7 @@ export default function DetailSurat() {
               <Badge variant="outline">
                 <BookOpenTextIcon /> {data.jumlahAyat} ayat
               </Badge>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-1 dark:border-cgreen dark:text-cgreen"
-                onClick={() => {
-                  playAudio();
-                }}
-              >
-                <PlayCircleIcon /> Putar Audio
-              </Button>
+              <AudioPlayer audio={data.audioFull["05"]} className="w-[200px]" />
             </div>
             <div className="mt-3">
               <Accordion type="single" collapsible className="w-full">
@@ -103,7 +70,7 @@ export default function DetailSurat() {
 
         <div className="mt-16">
           <h2 className="text-xl font-bold">Ayat-ayat</h2>
-          <div className="w-full h-[550px] mt-5 overflow-y-scroll p-4">
+          <div className="w-full h-[550px] mt-5 overflow-y-scroll p-4 scrollbar-custom">
             <AyatList ayats={data.ayat} />
           </div>
         </div>
