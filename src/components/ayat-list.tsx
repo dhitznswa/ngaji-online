@@ -1,9 +1,11 @@
 import { Card, CardContent } from "./ui/card";
-import { CopyIcon, Share2Icon } from "lucide-react";
+import { CopyIcon, PlayCircleIcon, Share2Icon } from "lucide-react";
 import type { AyatType } from "@/global";
-import AudioPlayer from "./ui/audio-player";
+import { useAudioContext } from "@/hooks/AudioFile";
+import { Badge } from "./ui/badge";
 
 export default function AyatList({ ayats }: { ayats: AyatType[] }) {
+  const { setUrl, setLabel, url } = useAudioContext();
   return (
     <>
       {ayats.map((ayat, i) => (
@@ -16,7 +18,16 @@ export default function AyatList({ ayats }: { ayats: AyatType[] }) {
                 </span>
               </div>
               <div className="flex justify-end gap-3 items-center">
-                <AudioPlayer audio={ayat.audio["05"]} className="w-[100px]" />
+                <Badge
+                  variant="outline"
+                  onClick={() => {
+                    if (url === ayat.audio["05"]) return;
+                    setUrl(ayat.audio["05"]);
+                    setLabel(`Ayat ke ${ayat.nomorAyat}`);
+                  }}
+                >
+                  <PlayCircleIcon /> Play
+                </Badge>
                 <CopyIcon className="w-5 h-5" />
                 <Share2Icon className="w-5 h-5" />
               </div>

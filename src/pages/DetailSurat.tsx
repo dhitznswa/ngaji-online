@@ -8,14 +8,27 @@ import {
 import AudioPlayer from "@/components/ui/audio-player";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowBigLeft, BookOpenTextIcon, MapPinIcon } from "lucide-react";
+import { useAudioContext } from "@/hooks/AudioFile";
+import {
+  ArrowBigLeft,
+  BookOpenTextIcon,
+  MapPinIcon,
+  PlayCircleIcon,
+} from "lucide-react";
+import { useEffect } from "react";
 import { Link, useLoaderData } from "react-router";
 
 export default function DetailSurat() {
   const data = useLoaderData();
+  const { setUrl, setLabel } = useAudioContext();
+
+  useEffect(() => {
+    setUrl(data.audioFull["05"]);
+    setLabel("Full");
+  }, []);
 
   return (
-    <div className="py-20 relative">
+    <div className="pt-20 relative">
       <div className="w-full">
         <Link
           to="/surat"
@@ -48,7 +61,16 @@ export default function DetailSurat() {
               <Badge variant="outline">
                 <BookOpenTextIcon /> {data.jumlahAyat} ayat
               </Badge>
-              <AudioPlayer audio={data.audioFull["05"]} className="w-[200px]" />
+              <Badge
+                variant="outline"
+                className="cursor-pointer hover:bg-cgreen/10"
+                onClick={() => {
+                  setUrl(data.audioFull["05"]);
+                  setLabel("Full");
+                }}
+              >
+                <PlayCircleIcon /> Play
+              </Badge>
             </div>
             <div className="mt-3">
               <Accordion type="single" collapsible className="w-full">
@@ -68,13 +90,15 @@ export default function DetailSurat() {
           </CardContent>
         </Card>
 
-        <div className="mt-16">
+        <div className="mt-16 mb-10">
           <h2 className="text-xl font-bold">Ayat-ayat</h2>
           <div className="w-full h-[550px] mt-5 overflow-y-scroll p-4 scrollbar-custom">
             <AyatList ayats={data.ayat} />
           </div>
         </div>
       </div>
+
+      <AudioPlayer />
     </div>
   );
 }
