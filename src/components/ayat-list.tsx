@@ -33,7 +33,7 @@ export default function AyatList({ ayats }: { ayats: AyatType[] }) {
               </div>
             </div>
             <div className="w-full my-10">
-              <h1 className="text-4xl text-end">{ayat.teksArab}</h1>
+              <h1 className="text-2xl md:text-4xl text-end">{ayat.teksArab}</h1>
             </div>
             <div className="w-full space-y-3">
               <p className="md:text-base text-muted-foreground">
