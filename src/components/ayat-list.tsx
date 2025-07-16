@@ -1,11 +1,16 @@
 import { Card, CardContent } from "./ui/card";
-import { CopyIcon, PlayCircleIcon, Share2Icon } from "lucide-react";
+import { CopyIcon, PlayCircleIcon } from "lucide-react";
 import type { AyatType } from "@/global";
 import { useAudioContext } from "@/hooks/AudioFile";
 import { Badge } from "./ui/badge";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 export default function AyatList({ ayats }: { ayats: AyatType[] }) {
   const { setUrl, setLabel, url } = useAudioContext();
+
+  const MySwal = withReactContent(Swal);
+
   return (
     <>
       {ayats.map((ayat, i) => (
@@ -25,11 +30,30 @@ export default function AyatList({ ayats }: { ayats: AyatType[] }) {
                     setUrl(ayat.audio["05"]);
                     setLabel(`Ayat ke ${ayat.nomorAyat}`);
                   }}
+                  className="cursor-pointer hover:bg-cgreen trasnsition-color duration-300"
                 >
                   <PlayCircleIcon /> Play
                 </Badge>
-                <CopyIcon className="w-5 h-5" />
-                <Share2Icon className="w-5 h-5" />
+
+                <Badge
+                  variant="secondary"
+                  onClick={() => {
+                    const textCopy = `${ayat.teksArab}\n\n${ayat.teksLatin}\n${ayat.teksIndonesia}\n--------------------\nNgaji Online | @dhitznswa`;
+                    navigator.clipboard.writeText(textCopy);
+
+                    MySwal.fire({
+                      text: "Ayat berhasil disalin!",
+                      icon: "success",
+                      position: "top-right",
+                      timer: 1500,
+                      showConfirmButton: false,
+                    });
+                  }}
+                  className="cursor-pointer "
+                >
+                  <CopyIcon className="w-5 h-5 cursor-pointer" /> Salin
+                </Badge>
+                {/* <Share2Icon className="w-5 h-5" /> */}
               </div>
             </div>
             <div className="w-full my-10">

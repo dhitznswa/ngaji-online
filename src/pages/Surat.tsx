@@ -9,6 +9,11 @@ export default function Surat() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    const title = document.querySelector("title") as HTMLTitleElement;
+    title.innerText = `Surat-surat | Ngaji Online - @dhitznswa`;
+  }, []);
+
+  useEffect(() => {
     const localSurat = localStorage.getItem("surat");
     if (!localSurat) return;
 

@@ -18,11 +18,16 @@ import {
   PlayCircleIcon,
 } from "lucide-react";
 import { useEffect } from "react";
-import { Link, useLoaderData, useLocation } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 export default function DetailSurat() {
   const data = useLoaderData();
   const { setUrl, setLabel } = useAudioContext();
+
+  useEffect(() => {
+    const title = document.querySelector("title") as HTMLTitleElement;
+    title.innerText = `${data.namaLatin} | Ngaji Online - @dhitznswa`;
+  }, [data.namaLatin]);
 
   useEffect(() => {
     setUrl(data.audioFull["05"]);
@@ -36,7 +41,7 @@ export default function DetailSurat() {
         <div>
           <Card
             className={cn(
-              "sticky top-1 z-[99] w-full border-t-8 border-cgreen shadow-md shadow-slate-500 transition-all duration-300 overflow-hidden ease-in-out"
+              "sticky top-1 z-[99] w-full border-t-8 border-cgreen shadow shadow-slate-500 transition-all duration-300 overflow-hidden ease-in-out"
             )}
           >
             <CardContent>
@@ -81,7 +86,7 @@ export default function DetailSurat() {
               </div>
             </CardContent>
           </Card>
-          <Card className="mt-4 p-1">
+          <Card className="mt-6 p-1">
             <CardContent>
               <div>
                 <div>

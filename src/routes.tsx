@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router";
 import Welcome from "./pages/Welcome";
 import Surat from "./pages/Surat";
 import DetailSurat from "./pages/DetailSurat";
+import ErrorPage from "./pages/error";
+import NotFound from "./pages/not-found";
 
 export const router = createBrowserRouter([
   {
@@ -22,12 +24,13 @@ export const router = createBrowserRouter([
         throw new Error("Gagal memuat data surat");
       }
 
-      const data = await response.json();
-      return data.data;
+      const res = await response.json();
+      return res.data;
     },
+    errorElement: <ErrorPage />,
   },
   {
     path: "*",
-    element: <div>404 Not Found</div>,
+    element: <NotFound />,
   },
 ]);
