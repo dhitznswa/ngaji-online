@@ -109,7 +109,7 @@ export default function DetailSurat() {
           </Card>
           <div className="mt-14 mb-10">
             <div className="w-full">
-              <AyatList ayats={data.ayat} />
+              <AyatList ayats={data.ayat} namaSurat={data.namaLatin}/>
             </div>
           </div>
         </div>

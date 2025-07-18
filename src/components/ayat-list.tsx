@@ -3,13 +3,16 @@ import { CopyIcon, PlayCircleIcon } from "lucide-react";
 import type { AyatType } from "@/global";
 import { useAudioContext } from "@/hooks/AudioFile";
 import { Badge } from "./ui/badge";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+import { toast } from "sonner";
 
-export default function AyatList({ ayats }: { ayats: AyatType[] }) {
+export default function AyatList({
+  ayats,
+  namaSurat,
+}: {
+  ayats: AyatType[];
+  namaSurat: string;
+}) {
   const { setUrl, setLabel, url } = useAudioContext();
-
-  const MySwal = withReactContent(Swal);
 
   return (
     <>
@@ -38,16 +41,10 @@ export default function AyatList({ ayats }: { ayats: AyatType[] }) {
                 <Badge
                   variant="secondary"
                   onClick={() => {
-                    const textCopy = `${ayat.teksArab}\n\n${ayat.teksLatin}\n${ayat.teksIndonesia}\n--------------------\nNgaji Online | @dhitznswa`;
+                    const textCopy = `${ayat.teksArab}\n\n${ayat.teksLatin}\n\nArtinya:\n${ayat.teksIndonesia}\n-----\n${namaSurat} ayat ke-${ayat.nomorAyat}`;
                     navigator.clipboard.writeText(textCopy);
 
-                    MySwal.fire({
-                      text: "Ayat berhasil disalin!",
-                      icon: "success",
-                      position: "top-right",
-                      timer: 1500,
-                      showConfirmButton: false,
-                    });
+                    toast.success("Ayat berhasil di copy");
                   }}
                   className="cursor-pointer "
                 >
