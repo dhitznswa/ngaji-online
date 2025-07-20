@@ -24,7 +24,7 @@ export default function AudioPlayer() {
             controls
             className="w-[80%] md:w-[50%] font-inter"
           >
-            <source src={url} type="audio/mpeg" />
+            <source src={url || ""} type="audio/mpeg" />
             Browser tidak mendukung audio.
           </audio>
         </div>

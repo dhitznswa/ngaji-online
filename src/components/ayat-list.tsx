@@ -1,9 +1,9 @@
 import { Card, CardContent } from "./ui/card";
-import { CopyIcon, PlayCircleIcon } from "lucide-react";
+import { CheckIcon, CopyIcon, PlayCircleIcon } from "lucide-react";
 import type { AyatType } from "@/global";
 import { useAudioContext } from "@/hooks/AudioFile";
 import { Badge } from "./ui/badge";
-import { toast } from "sonner";
+import { useState } from "react";
 
 export default function AyatList({
   ayats,
@@ -13,6 +13,7 @@ export default function AyatList({
   namaSurat: string;
 }) {
   const { setUrl, setLabel, url } = useAudioContext();
+  const [isCopied, setIsCopied] = useState<boolean>(false);
 
   return (
     <>
@@ -44,11 +45,23 @@ export default function AyatList({
                     const textCopy = `${ayat.teksArab}\n\n${ayat.teksLatin}\n\nArtinya:\n${ayat.teksIndonesia}\n-----\n${namaSurat} ayat ke-${ayat.nomorAyat}`;
                     navigator.clipboard.writeText(textCopy);
 
-                    toast.success("Ayat berhasil di copy");
+                    setIsCopied(true);
+
+                    setInterval(() => {
+                      setIsCopied(false);
+                    }, 1500);
                   }}
                   className="cursor-pointer "
                 >
-                  <CopyIcon className="w-5 h-5 cursor-pointer" /> Salin
+                  {isCopied ? (
+                    <>
+                      <CheckIcon className="w-5 h-5 cursor-pointer" /> Disalin!
+                    </>
+                  ) : (
+                    <>
+                      <CopyIcon className="w-5 h-5 cursor-pointer" /> Salin
+                    </>
+                  )}
                 </Badge>
                 {/* <Share2Icon className="w-5 h-5" /> */}
               </div>

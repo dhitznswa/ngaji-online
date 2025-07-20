@@ -17,16 +17,6 @@ export const router = createBrowserRouter([
   {
     path: "/surat/detail/:nomor",
     element: <DetailSurat />,
-    loader: async ({ params }) => {
-      const nomor = params.nomor;
-      const response = await fetch(`https://equran.id/api/v2/surat/${nomor}`);
-      if (!response.ok) {
-        throw new Error("Gagal memuat data surat");
-      }
-
-      const res = await response.json();
-      return res.data;
-    },
     errorElement: <ErrorPage />,
   },
   {
